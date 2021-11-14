@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news/datanews.dart';
-import 'package:news/news.dart';
 import 'package:news/posts_cubit.dart';
 
 class PostsView extends StatelessWidget {
@@ -11,24 +9,33 @@ class PostsView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Posts'),
       ),
-      body: BlocBuilder<PostsCubit, List<dynamic>>(
-        builder: (context, posts) {
-          if (posts.isEmpty) {
+      body: BlocBuilder<PostsBloc, PostsState>(
+        builder: (context, state) {
+          if (state is LoadingPostsState) {
             return Center(
               child: CircularProgressIndicator(),
             );
+          } else if (state is LoadedPostsState) {
+            return RefreshIndicator(
+              onRefresh: () async =>
+                  BlocProvider.of<PostsBloc>(context).add(PullToRefreshEvent()),
+              child: ListView.builder(
+                  itemCount: state.news.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(state.news[index].title),
+                      ),
+                    );
+                  }),
+            );
+          } else if (state is FailedToLoadPostsState) {
+            return Center(
+              child: Text('Error occured: ${state.error}'),
+            );
+          } else {
+            return Container();
           }
-
-          return ListView.builder(
-              itemCount: posts.length,
-              itemBuilder: (context, index) {
-                return Card(
-                    child: ListTile(
-                  title: posts[index].title == null
-                      ? Text("null")
-                      : Text(posts[index].title),
-                ));
-              });
         },
       ),
     );
