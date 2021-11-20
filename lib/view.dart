@@ -70,15 +70,26 @@ class _NewsViewState extends State<NewsView>
             isScrollable: true,
             controller: _tabController,
           )),
-      body: TabBarView(controller: _tabController, children: [
-        General(),
-        Technology(),
-        Business(),
-        Entertainment(),
-        Health(),
-        Sports(),
-        Science()
-      ]),
+      body: BlocListener<CountryCubit, String>(
+        listener: (context, state) {
+          BlocProvider.of<BusinessCubit>(context).getnews(state);
+          BlocProvider.of<EntertainmentCubit>(context).getnews(state);
+          BlocProvider.of<GeneralCubit>(context).getnews(state);
+          BlocProvider.of<HealthCubit>(context).getnews(state);
+          BlocProvider.of<SportsCubit>(context).getnews(state);
+          BlocProvider.of<TechnologyCubit>(context).getnews(state);
+          BlocProvider.of<ScienceCubit>(context).getnews(state);
+        },
+        child: TabBarView(controller: _tabController, children: [
+          General(),
+          Technology(),
+          Business(),
+          Entertainment(),
+          Health(),
+          Sports(),
+          Science()
+        ]),
+      ),
     );
   }
 }

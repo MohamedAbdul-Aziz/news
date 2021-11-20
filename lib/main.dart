@@ -24,33 +24,32 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CountryCubit, String>(
-      builder: (context, state) {
-        return MaterialApp(
-            home: MultiBlocProvider(providers: [
-          BlocProvider<GeneralCubit>(
-            create: (context) => GeneralCubit()..getnews(state),
-          ),
-          BlocProvider<TechnologyCubit>(
-            create: (context) => TechnologyCubit()..getnews(state),
-          ),
-          BlocProvider<BusinessCubit>(
-            create: (context) => BusinessCubit()..getnews(state),
-          ),
-          BlocProvider<EntertainmentCubit>(
-            create: (context) => EntertainmentCubit()..getnews(state),
-          ),
-          BlocProvider<HealthCubit>(
-            create: (context) => HealthCubit()..getnews(state),
-          ),
-          BlocProvider<SportsCubit>(
-            create: (context) => SportsCubit()..getnews(state),
-          ),
-          BlocProvider<ScienceCubit>(
-            create: (context) => ScienceCubit()..getnews(state),
-          ),
-        ], child: NewsView()));
-      },
-    );
+    return MaterialApp(
+        home: MultiBlocProvider(providers: [
+      BlocProvider<GeneralCubit>(
+        lazy: false,
+        create: (context) => GeneralCubit()..getnews("eg"),
+      ),
+      BlocProvider<TechnologyCubit>(
+        lazy: false,
+        create: (context) => TechnologyCubit()..getnews("eg"),
+      ),
+      BlocProvider<BusinessCubit>(
+        lazy: false,
+        create: (context) => BusinessCubit()..getnews("eg"),
+      ),
+      BlocProvider<EntertainmentCubit>(
+        create: (context) => EntertainmentCubit()..getnews("eg"),
+      ),
+      BlocProvider<HealthCubit>(
+        create: (context) => HealthCubit()..getnews("eg"),
+      ),
+      BlocProvider<SportsCubit>(
+        create: (context) => SportsCubit()..getnews("eg"),
+      ),
+      BlocProvider<ScienceCubit>(
+        create: (context) => ScienceCubit()..getnews("eg"),
+      ),
+    ], child: NewsView()));
   }
 }
