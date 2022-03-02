@@ -8,19 +8,18 @@ class DataService {
   var category;
   var country;
 
-  Future<List<dynamic>> getData(country, category) async {
+  Future<List<dynamic>?> getData(country, category) async {
     final String url =
         'https://newsapi.org/v2/top-headlines?country=$country&apiKey=517a0c069b1242bdb87d5b54ac7252a3&1=page&category=$category';
     try {
-      var response = await http.get(url);
+      final response = await http.Client().get(Uri.parse(url));
       if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        final dataNews = DataNews.fromJson(json);
-        final map = dataNews.toJson();
-        final list = map['articles'];
+        final dataNews = DataNews.fromJson(jsonDecode(response.body));
 
-        var listNews = list.map((e) => News.formJason(e)).toList();
+        List<Articles>? listNews = dataNews.articles;
         return listNews;
+      } else {
+        return [];
       }
     } catch (e) {
       return [];

@@ -1,11 +1,11 @@
 class News {
-  final String title;
-  final String author;
-  final String description;
-  final String url;
-  final String urlToImage;
-  final String publishedAt;
-  final String content;
+  String? title;
+  String? author;
+  String? description;
+  String? url;
+  String? urlToImage;
+  String? publishedAt;
+  String? content;
 
   News(
       {this.title,

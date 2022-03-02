@@ -17,7 +17,7 @@ class NewsView extends StatefulWidget {
 
 class _NewsViewState extends State<NewsView>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
   final List<Tab> newsTabs = <Tab>[
     new Tab(text: 'general'),
@@ -37,7 +37,7 @@ class _NewsViewState extends State<NewsView>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -47,6 +47,7 @@ class _NewsViewState extends State<NewsView>
       appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent,
           title: ToggleSwitch(
+            totalSwitches: 2,
             minWidth: 90.0,
             initialLabelIndex: 1,
             cornerRadius: 20.0,
@@ -54,7 +55,10 @@ class _NewsViewState extends State<NewsView>
             inactiveBgColor: Colors.grey,
             inactiveFgColor: Colors.white,
             labels: ['USA', 'Egypt'],
-            activeBgColors: [Colors.blue, Colors.pink],
+            activeBgColors: [
+              [Colors.blue],
+              [Colors.pink]
+            ],
             onToggle: (index) {
               if (index == 0) {
                 BlocProvider.of<CountryCubit>(context).getnews("us");
@@ -98,9 +102,9 @@ class General extends StatelessWidget {
   General() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GeneralCubit, List<dynamic>>(
+    return BlocBuilder<GeneralCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -125,9 +129,9 @@ class Technology extends StatelessWidget {
   Technology() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TechnologyCubit, List<dynamic>>(
+    return BlocBuilder<TechnologyCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -152,9 +156,9 @@ class Entertainment extends StatelessWidget {
   Entertainment() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EntertainmentCubit, List<dynamic>>(
+    return BlocBuilder<EntertainmentCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -179,9 +183,9 @@ class Business extends StatelessWidget {
   Business() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BusinessCubit, List<dynamic>>(
+    return BlocBuilder<BusinessCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -206,9 +210,9 @@ class Health extends StatelessWidget {
   Health() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HealthCubit, List<dynamic>>(
+    return BlocBuilder<HealthCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -233,9 +237,9 @@ class Science extends StatelessWidget {
   Science() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ScienceCubit, List<dynamic>>(
+    return BlocBuilder<ScienceCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -260,9 +264,9 @@ class Sports extends StatelessWidget {
   Sports() : super();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SportsCubit, List<dynamic>>(
+    return BlocBuilder<SportsCubit, List<dynamic>?>(
       builder: (context, news) {
-        if (news.isEmpty) {
+        if (news!.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
